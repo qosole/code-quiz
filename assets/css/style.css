@@ -2,22 +2,25 @@
     font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
+
 header {
     text-align: center;
     margin-top: 10%;
 }
 
-header button {
-    margin: 0 auto;
-    padding: 2%;
-    background-color: gray;
-    border: 1.5px solid black;
-    color: white; 
-    cursor: pointer;
-    margin: 5px;
-    border-radius: 12px;
-}
+    header button {
+        margin: 0 auto;
+        padding: 2%;
+        background-color: gray;
+        border: 1.5px solid black;
+        color: white; 
+        cursor: pointer;
+        margin: 5px;
+        border-radius: 12px;
+    }
 
+
+/* First column of buttons (quiz choices) */
 #quiz-choices-c1{
     border-bottom: 3px solid white;
     position: absolute;
@@ -25,17 +28,19 @@ header button {
     left: 33%;
 }
 
-#quiz-choices-c1 button {
-    display: none;
-    background-color: gray;
-    border: 1.5px solid black;
-    color: white; 
-    cursor: pointer;
-    margin: 5px;
-    border-radius: 12px;
-    padding: 10px;
-}
+    #quiz-choices-c1 button {
+        display: none;
+        background-color: gray;
+        border: 1.5px solid black;
+        color: white; 
+        cursor: pointer;
+        margin: 5px;
+        border-radius: 12px;
+        padding: 10px;
+    }
 
+
+/* Second column of buttons (quiz choices) */    
 #quiz-choices-c2 {
     border-bottom: 3px solid white;
     position: absolute;
@@ -43,19 +48,30 @@ header button {
     right: 33%;
 }
 
-#quiz-choices-c2 button {
-    display: none;
-    background-color: gray;
-    border: 1.5px solid black;
-    color: white; 
-    cursor: pointer;
-    margin: 5px;
-    border-radius: 12px;
-    padding: 10px;
+    #quiz-choices-c2 button {
+        display: none;
+        background-color: gray;
+        border: 1.5px solid black;
+        color: white; 
+        cursor: pointer;
+        margin: 5px;
+        border-radius: 12px;
+        padding: 10px;
+    }
+
+
+/* Extra button styling */
+button:hover {
+    background-color: slategray;
+    color: gold;
 }
 
+#quiz-choices-c1 button:hover {
+    background-color: slategray;
+    color: gold;
+}
 
-button:hover {
+#quiz-choices-c2 button:hover {
     background-color: slategray;
     color: gold;
 }
