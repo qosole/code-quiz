@@ -61,6 +61,13 @@ header {
     }
 
 
+/* Form for user initials */
+form {
+    text-align: center;
+    margin-top: 10px;
+}
+
+
 /* Navigation buttons */
 #navigation {
     position: absolute;

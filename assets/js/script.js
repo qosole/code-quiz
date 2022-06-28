@@ -20,7 +20,7 @@ function endQuiz() {
     quizQuestion.textContent = "FINISH!";
     quizGuide.style.display = "block";;
     quizGuide.textContent = "Your score: " + score; 
-    topLine.style.width = "50%";
+    topLine.style.width = "0%";
     for (var i = 0; i < choicesNumber; i++) {
         quizChoices[i].style.display = "none";
     }
@@ -31,6 +31,7 @@ function endQuiz() {
     var userInitials = document.createElement("input");
     userInitials.setAttribute('type', "text");
     userInitials.setAttribute('name', "initials");
+    userInitials.setAttribute('placeholder', "Your Initials");
 
     var submitBtn = document.createElement("input");
     submitBtn.setAttribute('type', "submit");
@@ -48,8 +49,10 @@ function endQuiz() {
         var scoreStorage = localStorage.getItem("score");
         var initialStorage = localStorage.getItem("userInitials");
 
-        scoreStorage.concat(",", score);
-        initialStorage.concat(",", userInitials.value);
+        scoreStorage += ","
+        scoreStorage += score;
+        initialStorage += ",";
+        initialStorage += userInitials.value;
         localStorage.setItem("score", scoreStorage);
         localStorage.setItem("userInitials", initialStorage);
     });
@@ -83,6 +86,7 @@ function fifthQuestion() {
      quizChoices[2].parentNode.replaceChild(new2, quizChoices[2]);
      var new3 = quizChoices[3].cloneNode(true);
      quizChoices[3].parentNode.replaceChild(new3, quizChoices[3]);
+
     // Adding functionality to quiz choices buttons (myArray[1] is correct)
     for (var i = 0; i < choicesNumber; i++) {
         quizChoices[i].addEventListener("click", function clickListener(event) {
