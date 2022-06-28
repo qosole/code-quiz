@@ -7,12 +7,59 @@ var correct = document.getElementById("correct-incorrect");
 
 var choicesNumber = 4; // Quiz will be multiple choice with 4 choices
 var delay = 1000; // 1 second delay
+var score = 0; // User's quiz score
+var timer = 60000; // How much time user has to take the quiz (60 seconds)
 
 function endQuiz() {
+    // Removing the result of the last question after delay
+    var resultTimer = setTimeout(function() {
+        correct.textContent = "";
+    }, delay);
 
+    // Changing page to display results
+    quizQuestion.textContent = "FINISH!";
+    quizGuide.style.display = "block";;
+    quizGuide.textContent = "Your score: " + score; 
+    topLine.style.width = "50%";
+    for (var i = 0; i < choicesNumber; i++) {
+        quizChoices[i].style.display = "none";
+    }
+
+    // Creating a form for user initials
+    var initialForm = document.createElement("form");
+
+    var userInitials = document.createElement("input");
+    userInitials.setAttribute('type', "text");
+    userInitials.setAttribute('name', "initials");
+
+    var submitBtn = document.createElement("input");
+    submitBtn.setAttribute('type', "submit");
+    submitBtn.setAttribute('value', "Submit");
+
+    initialForm.appendChild(userInitials);
+    initialForm.appendChild(submitBtn);
+
+    document.body.appendChild(initialForm);
+
+    // Storing user initials and score when submit is clicked
+    submitBtn.addEventListener("click", function(event) {
+        event.preventDefault(); // Prevents page from reloading when submit is clicked
+
+        var scoreStorage = localStorage.getItem("score");
+        var initialStorage = localStorage.getItem("userInitials");
+
+        scoreStorage.concat(",", score);
+        initialStorage.concat(",", userInitials.value);
+        localStorage.setItem("score", scoreStorage);
+        localStorage.setItem("userInitials", initialStorage);
+    });
+
+    console.log(localStorage.getItem("score"));
+    console.log(localStorage.getItem("userInitials"));
 }
 
 function fifthQuestion() {
+    console.log(score);
     // Removing the result of the last question after delay
     var resultTimer = setTimeout(function() {
         correct.textContent = "";
@@ -27,18 +74,29 @@ function fifthQuestion() {
     quizChoices[2].textContent = "myArray[1]";
     quizChoices[3].textContent = "myArray(1)";
 
+     // Removing the previous event listeners
+     var new0 = quizChoices[0].cloneNode(true);
+     quizChoices[0].parentNode.replaceChild(new0, quizChoices[0]);
+     var new1 = quizChoices[1].cloneNode(true);
+     quizChoices[1].parentNode.replaceChild(new1, quizChoices[1]);
+     var new2 = quizChoices[2].cloneNode(true);
+     quizChoices[2].parentNode.replaceChild(new2, quizChoices[2]);
+     var new3 = quizChoices[3].cloneNode(true);
+     quizChoices[3].parentNode.replaceChild(new3, quizChoices[3]);
     // Adding functionality to quiz choices buttons (myArray[1] is correct)
     for (var i = 0; i < choicesNumber; i++) {
-        quizChoices[i].addEventListener("click", function(event) {
+        quizChoices[i].addEventListener("click", function clickListener(event) {
             var userChoice = event.target;
             if (userChoice.textContent == "myArray[1]") {
                 correct.textContent = "Correct! :D";
                 correct.style.color = "green";
+                score += 10;
                 clearTimeout(resultTimer); // Need to clear timer so that the first result timer does not bleed into second result timer
                 endQuiz(); // Proceeding to end of quiz
             } else {
                 correct.textContent = "Incorrect :(";
                 correct.style.color = "red";
+                timer -= 10000; // Subtracting 10 seconds from timer
                 clearTimeout(resultTimer);
                 endQuiz();
             }
@@ -47,6 +105,7 @@ function fifthQuestion() {
 }
 
 function fourthQuestion() {
+    console.log(score);
     // Removing the result of the last question after delay
     var resultTimer = setTimeout(function() {
         correct.textContent = "";
@@ -61,18 +120,30 @@ function fourthQuestion() {
     quizChoices[2].textContent = "how";
     quizChoices[3].textContent = "which";
 
+     // Removing the previous event listeners
+     var new0 = quizChoices[0].cloneNode(true);
+     quizChoices[0].parentNode.replaceChild(new0, quizChoices[0]);
+     var new1 = quizChoices[1].cloneNode(true);
+     quizChoices[1].parentNode.replaceChild(new1, quizChoices[1]);
+     var new2 = quizChoices[2].cloneNode(true);
+     quizChoices[2].parentNode.replaceChild(new2, quizChoices[2]);
+     var new3 = quizChoices[3].cloneNode(true);
+     quizChoices[3].parentNode.replaceChild(new3, quizChoices[3]);
+
     // Adding functionality to quiz choices buttons (for is correct)
     for (var i = 0; i < choicesNumber; i++) {
-        quizChoices[i].addEventListener("click", function(event) {
+        quizChoices[i].addEventListener("click", function clickListener(event) {
             var userChoice = event.target;
             if (userChoice.textContent == "for") {
                 correct.textContent = "Correct! :D";
                 correct.style.color = "green";
+                score += 10;
                 clearTimeout(resultTimer); // Need to clear timer so that the first result timer does not bleed into second result timer
                 fifthQuestion(); // Proceeding to next question
             } else {
                 correct.textContent = "Incorrect :(";
                 correct.style.color = "red";
+                timer -= 10000; // Subtracting 10 seconds from timer
                 clearTimeout(resultTimer);
                 fifthQuestion();
             }
@@ -81,6 +152,7 @@ function fourthQuestion() {
 }
 
 function thirdQuestion() {
+    console.log(score);
     // Removing the result of the last question after delay
     var resultTimer = setTimeout(function() {
         correct.textContent = "";
@@ -94,19 +166,31 @@ function thirdQuestion() {
     quizChoices[1].textContent = ".js";
     quizChoices[2].textContent = ".java";
     quizChoices[3].textContent = ".html";
+    
+    // Removing the previous event listeners
+    var new0 = quizChoices[0].cloneNode(true);
+    quizChoices[0].parentNode.replaceChild(new0, quizChoices[0]);
+    var new1 = quizChoices[1].cloneNode(true);
+    quizChoices[1].parentNode.replaceChild(new1, quizChoices[1]);
+    var new2 = quizChoices[2].cloneNode(true);
+    quizChoices[2].parentNode.replaceChild(new2, quizChoices[2]);
+    var new3 = quizChoices[3].cloneNode(true);
+    quizChoices[3].parentNode.replaceChild(new3, quizChoices[3]);
 
     // Adding functionality to quiz choices buttons (.js is correct)
     for (var i = 0; i < choicesNumber; i++) {
-        quizChoices[i].addEventListener("click", function(event) {
+        quizChoices[i].addEventListener("click", function clickListener(event) {
             var userChoice = event.target;
             if (userChoice.textContent == ".js") {
                 correct.textContent = "Correct! :D";
                 correct.style.color = "green";
+                score += 10;
                 clearTimeout(resultTimer); // Need to clear timer so that the first result timer does not bleed into second result timer
                 fourthQuestion(); // Proceeding to next question
             } else {
                 correct.textContent = "Incorrect :(";
                 correct.style.color = "red";
+                timer -= 10000; // Subtracting 10 seconds from timer
                 clearTimeout(resultTimer);
                 fourthQuestion();
             }
@@ -115,6 +199,7 @@ function thirdQuestion() {
 }
 
 function secondQuestion() {
+    console.log(score);
     // Removing the result of the last question after delay
     var resultTimer = setTimeout(function() {
         correct.textContent = "";
@@ -129,18 +214,30 @@ function secondQuestion() {
     quizChoices[2].textContent = "array";
     quizChoices[3].textContent = "farley";
 
+    // Removing the previous event listeners
+    var new0 = quizChoices[0].cloneNode(true);
+    quizChoices[0].parentNode.replaceChild(new0, quizChoices[0]);
+    var new1 = quizChoices[1].cloneNode(true);
+    quizChoices[1].parentNode.replaceChild(new1, quizChoices[1]);
+    var new2 = quizChoices[2].cloneNode(true);
+    quizChoices[2].parentNode.replaceChild(new2, quizChoices[2]);
+    var new3 = quizChoices[3].cloneNode(true);
+    quizChoices[3].parentNode.replaceChild(new3, quizChoices[3]);
+
     // Adding functionality to quiz choices buttons (farley is correct)
     for (var i = 0; i < choicesNumber; i++) {
-        quizChoices[i].addEventListener("click", function(event) {
+        quizChoices[i].addEventListener("click", function clickListener(event) {
             var userChoice = event.target;
             if (userChoice.textContent == "farley") {
                 correct.textContent = "Correct! :D";
                 correct.style.color = "green";
+                score += 10;
                 clearTimeout(resultTimer); // Need to clear timer so that the first result timer does not bleed into second result timer
                 thirdQuestion(); // Proceeding to next question
             } else {
                 correct.textContent = "Incorrect :(";
                 correct.style.color = "red";
+                timer -= 10000; // Subtracting 10 seconds from timer
                 clearTimeout(resultTimer);
                 thirdQuestion();
             }
@@ -149,6 +246,7 @@ function secondQuestion() {
 }
 
 function firstQuestion() {
+    console.log(score);
     // Changing page to display first question
     quizQuestion.textContent = "What keyword would you use to initialize a variable with a value of 55.2?";
     quizGuide.style.display = "none";
@@ -160,15 +258,17 @@ function firstQuestion() {
 
     // Adding functionality to quiz choices buttons (var is correct)
     for (var i = 0; i < choicesNumber; i++) {
-        quizChoices[i].addEventListener("click", function(event) {
+        quizChoices[i].addEventListener("click", function clickListener(event) {
             var userChoice = event.target;
             if (userChoice.textContent == "var") {
                 correct.textContent = "Correct! :D";
                 correct.style.color = "green";
+                score += 10; 
                 secondQuestion(); // Proceeding to next question
             } else {
                 correct.textContent = "Incorrect :(";
                 correct.style.color = "red";
+                timer -= 10000; // Subtracting 10 seconds from timer
                 secondQuestion(); 
             }
         });
