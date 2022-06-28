@@ -8,8 +8,42 @@ var correct = document.getElementById("correct-incorrect");
 var choicesNumber = 4; // Quiz will be multiple choice with 4 choices
 var delay = 1000; // 1 second delay
 
+function thirdQuestion() {
+    // Removing the result of the last question after delay
+    var resultTimer = setTimeout(function() {
+        correct.textContent = "";
+    }, delay);
+
+    // Changing page to display second question
+    quizQuestion.textContent = "What file extension does JavaScript use?";
+    quizGuide.style.display = "none";
+    topLine.style.width = "38%";
+    quizChoices[0].textContent = ".scpt";
+    quizChoices[1].textContent = ".js";
+    quizChoices[2].textContent = ".java";
+    quizChoices[3].textContent = ".html";
+
+    // Adding functionality to quiz choices buttons (.js is correct)
+    for (var i = 0; i < choicesNumber; i++) {
+        quizChoices[i].addEventListener("click", function(event) {
+            var userChoice = event.target;
+            if (userChoice.textContent == ".js") {
+                correct.textContent = "Correct! :D";
+                correct.style.color = "green";
+                clearTimeout(resultTimer); // Need to clear timer so that the first result timer does not bleed into second result timer
+                //thirdQuestion(); // Proceeding to next question
+            } else {
+                correct.textContent = "Incorrect :(";
+                correct.style.color = "red";
+                clearTimeout(resultTimer);
+                //thirdQuestion();
+            }
+        });
+    }
+}
+
 function secondQuestion() {
-    // Removing the result of the last question after delay (1 second)
+    // Removing the result of the last question after delay
     var resultTimer = setTimeout(function() {
         correct.textContent = "";
     }, delay);
@@ -17,7 +51,7 @@ function secondQuestion() {
     // Changing page to display second question
     quizQuestion.textContent = "Which is NOT a data type?";
     quizGuide.style.display = "none";
-    topLine.style.width = "70%";
+    topLine.style.width = "38%";
     quizChoices[0].textContent = "string";
     quizChoices[1].textContent = "number";
     quizChoices[2].textContent = "array";
@@ -31,10 +65,12 @@ function secondQuestion() {
                 correct.textContent = "Correct! :D";
                 correct.style.color = "green";
                 clearTimeout(resultTimer); // Need to clear timer so that the first result timer does not bleed into second result timer
+                thirdQuestion(); // Proceeding to next question
             } else {
                 correct.textContent = "Incorrect :(";
                 correct.style.color = "red";
                 clearTimeout(resultTimer);
+                thirdQuestion();
             }
         });
     }
