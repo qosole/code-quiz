@@ -8,16 +8,54 @@ var correct = document.getElementById("correct-incorrect");
 var choicesNumber = 4; // Quiz will be multiple choice with 4 choices
 var delay = 1000; // 1 second delay
 
+function fifthQuestion() {
+
+}
+
+function fourthQuestion() {
+    // Removing the result of the last question after delay
+    var resultTimer = setTimeout(function() {
+        correct.textContent = "";
+    }, delay);
+
+    // Changing page to display fourth question
+    quizQuestion.textContent = "Which keyword indicates a loop?";
+    quizGuide.style.display = "none";
+    topLine.style.width = "38%";
+    quizChoices[0].textContent = "for";
+    quizChoices[1].textContent = "why";
+    quizChoices[2].textContent = "how";
+    quizChoices[3].textContent = "which";
+
+    // Adding functionality to quiz choices buttons (for is correct)
+    for (var i = 0; i < choicesNumber; i++) {
+        quizChoices[i].addEventListener("click", function(event) {
+            var userChoice = event.target;
+            if (userChoice.textContent == "for") {
+                correct.textContent = "Correct! :D";
+                correct.style.color = "green";
+                clearTimeout(resultTimer); // Need to clear timer so that the first result timer does not bleed into second result timer
+                fifthQuestion(); // Proceeding to next question
+            } else {
+                correct.textContent = "Incorrect :(";
+                correct.style.color = "red";
+                clearTimeout(resultTimer);
+                fifthQuestion();
+            }
+        });
+    }
+}
+
 function thirdQuestion() {
     // Removing the result of the last question after delay
     var resultTimer = setTimeout(function() {
         correct.textContent = "";
     }, delay);
 
-    // Changing page to display second question
+    // Changing page to display third question
     quizQuestion.textContent = "What file extension does JavaScript use?";
     quizGuide.style.display = "none";
-    topLine.style.width = "38%";
+    topLine.style.width = "42%";
     quizChoices[0].textContent = ".scpt";
     quizChoices[1].textContent = ".js";
     quizChoices[2].textContent = ".java";
@@ -31,12 +69,12 @@ function thirdQuestion() {
                 correct.textContent = "Correct! :D";
                 correct.style.color = "green";
                 clearTimeout(resultTimer); // Need to clear timer so that the first result timer does not bleed into second result timer
-                //thirdQuestion(); // Proceeding to next question
+                fourthQuestion(); // Proceeding to next question
             } else {
                 correct.textContent = "Incorrect :(";
                 correct.style.color = "red";
                 clearTimeout(resultTimer);
-                //thirdQuestion();
+                fourthQuestion();
             }
         });
     }
