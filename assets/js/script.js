@@ -8,8 +8,42 @@ var correct = document.getElementById("correct-incorrect");
 var choicesNumber = 4; // Quiz will be multiple choice with 4 choices
 var delay = 1000; // 1 second delay
 
-function fifthQuestion() {
+function endQuiz() {
 
+}
+
+function fifthQuestion() {
+    // Removing the result of the last question after delay
+    var resultTimer = setTimeout(function() {
+        correct.textContent = "";
+    }, delay);
+
+    // Changing page to display fifth question
+    quizQuestion.textContent = "Which is correct syntax to access the second element in array myArray?";
+    quizGuide.style.display = "none";
+    topLine.style.width = "70%";
+    quizChoices[0].textContent = "myArray[2]";
+    quizChoices[1].textContent = "myArray(2)";
+    quizChoices[2].textContent = "myArray[1]";
+    quizChoices[3].textContent = "myArray(1)";
+
+    // Adding functionality to quiz choices buttons (myArray[1] is correct)
+    for (var i = 0; i < choicesNumber; i++) {
+        quizChoices[i].addEventListener("click", function(event) {
+            var userChoice = event.target;
+            if (userChoice.textContent == "myArray[1]") {
+                correct.textContent = "Correct! :D";
+                correct.style.color = "green";
+                clearTimeout(resultTimer); // Need to clear timer so that the first result timer does not bleed into second result timer
+                endQuiz(); // Proceeding to end of quiz
+            } else {
+                correct.textContent = "Incorrect :(";
+                correct.style.color = "red";
+                clearTimeout(resultTimer);
+                endQuiz();
+            }
+        });
+    }
 }
 
 function fourthQuestion() {
