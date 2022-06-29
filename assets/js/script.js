@@ -7,6 +7,7 @@ var correct = document.getElementById("correct-incorrect");
 var timerDisplay = document.getElementById("timer");
 var resetButton = document.querySelector(".reset-score");
 var backButton = document.querySelector(".back");
+var viewButton = document.querySelector(".view-score");
 
 var choicesNumber = 4; // Quiz will be multiple choice with 4 choices
 var delay = 1000; // 1 second delay
@@ -17,13 +18,19 @@ var quizTimer; // Used to stop the quiz timer
 
 function showHighScores() {
     // Changing page to display high scores (stored in local storage)
+    startButton.style.display = "none";  // Hide start button (needed if this page is reached from home page)
+    viewButton.style.display = "none"; // Hide view scores button (needed if this page is reached from home page)
     quizQuestion.textContent = "High Scores";
     quizGuide.style.display = "none";
     topLine.style.width = "0%";
     for (var i = 0; i < choicesNumber; i++) {
         quizChoices[i].style.display = "none";
     }
-    document.querySelector("form").style.display = "none";
+
+    // Removing form from page (if statement needed to avoid error if page is reached from home page)
+    if (document.querySelector("form") != null) {
+        document.querySelector("form").style.display = "none";
+    }
 
     // Grabbing from local storage
     var scoreStorage = localStorage.getItem("score");
@@ -348,9 +355,13 @@ function startQuiz() {
     for (var i = 0; i < choicesNumber; i++) {
         quizChoices[i].style.display = "block";
     }
+    viewButton.style.display = "none";  // Hide view scores button
     startButton.style.display = "none";  // Hide start button
     quizTimer = setInterval(startTimer, delay); // Start the timer
     firstQuestion(); // Proceeding to first question
 }
 
 startButton.addEventListener("click", startQuiz);
+
+viewButton.style.display = "block";
+viewButton.addEventListener("click", showHighScores);
