@@ -6,6 +6,7 @@ var topLine = document.getElementById("top-line");
 var correct = document.getElementById("correct-incorrect");
 var timerDisplay = document.getElementById("timer");
 var resetButton = document.querySelector(".reset-score");
+var backButton = document.querySelector(".back");
 
 var choicesNumber = 4; // Quiz will be multiple choice with 4 choices
 var delay = 1000; // 1 second delay
@@ -40,6 +41,7 @@ function showHighScores() {
 
     // Button to reset score
     resetButton.style.display = "block";
+    backButton.style.display = "block";
 }
 
 function endQuiz() {
