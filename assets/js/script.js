@@ -41,7 +41,16 @@ function showHighScores() {
 
     // Button to reset score
     resetButton.style.display = "block";
+    resetButton.addEventListener("click", function() {
+        localStorage.clear();
+        scoresDisplay.textContent = "";
+    });
+
+    // Button to go back to beginning of quiz
     backButton.style.display = "block";
+    backButton.addEventListener("click", function(){
+        location.reload();
+    });
 }
 
 function endQuiz() {
@@ -100,7 +109,6 @@ function endQuiz() {
     });
 
     console.log(localStorage.getItem("score"));
-    console.log(localStorage.getItem("userInitials"));
 }
 
 function fifthQuestion() {
@@ -337,7 +345,6 @@ function startTimer() {
 // Hiding "START!" button and revealing quiz choices when user presses "START!" button
 function startQuiz() {
     // Reveal quiz choices 
-    //localStorage.clear();
     for (var i = 0; i < choicesNumber; i++) {
         quizChoices[i].style.display = "block";
     }
