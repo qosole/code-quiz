@@ -4,17 +4,48 @@ var quizQuestion = document.querySelector("h1");
 var quizGuide = document.getElementById("guide");
 var topLine = document.getElementById("top-line");
 var correct = document.getElementById("correct-incorrect");
+var timerDisplay = document.getElementById("timer");
 
 var choicesNumber = 4; // Quiz will be multiple choice with 4 choices
 var delay = 1000; // 1 second delay
 var score = 0; // User's quiz score
-var timer = 60000; // How much time user has to take the quiz (60 seconds)
+var timer = 60000; // How much time user has to take the quiz in milliseconds
+var timeRemaining = 60; // How much time user has to take the quiz in seconds
+var quizTimer;
+
+function showHighScores() {
+    // Changing page to display high scores (stored in local storage)
+    quizQuestion.textContent = "High Scores";
+    quizGuide.style.display = "none";
+    topLine.style.width = "0%";
+    for (var i = 0; i < choicesNumber; i++) {
+        quizChoices[i].style.display = "none";
+    }
+    document.querySelector("form").style.display = "none";
+
+    // Grabbing from local storage
+    var scoreStorage = localStorage.getItem("score");
+
+    // Creating list elements to display high scores
+    var scoresList = document.createElement("ul");
+    scoresList.className = "high-score-display";
+    var scoresDisplay = document.createElement("li");
+    scoresDisplay.className = "display";
+
+    scoresDisplay.innerHTML = scoreStorage;
+
+    scoresList.appendChild(scoresDisplay);
+    document.body.appendChild(scoresList);
+}
 
 function endQuiz() {
     // Removing the result of the last question after delay
     var resultTimer = setTimeout(function() {
         correct.textContent = "";
     }, delay);
+
+    // Stopping the timer
+    clearInterval(quizTimer);
 
     // Changing page to display results
     quizQuestion.textContent = "FINISH!";
@@ -39,7 +70,6 @@ function endQuiz() {
 
     initialForm.appendChild(userInitials);
     initialForm.appendChild(submitBtn);
-
     document.body.appendChild(initialForm);
 
     // Storing user initials and score when submit is clicked
@@ -47,14 +77,18 @@ function endQuiz() {
         event.preventDefault(); // Prevents page from reloading when submit is clicked
 
         var scoreStorage = localStorage.getItem("score");
-        var initialStorage = localStorage.getItem("userInitials");
+        if (scoreStorage == null) {
+            scoreStorage = "";
+        }
 
-        scoreStorage += ","
+        scoreStorage += userInitials.value;
+        scoreStorage += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
         scoreStorage += score;
-        initialStorage += ",";
-        initialStorage += userInitials.value;
+        scoreStorage += "<br>";
+        
         localStorage.setItem("score", scoreStorage);
-        localStorage.setItem("userInitials", initialStorage);
+
+        showHighScores();
     });
 
     console.log(localStorage.getItem("score"));
@@ -100,7 +134,7 @@ function fifthQuestion() {
             } else {
                 correct.textContent = "Incorrect :(";
                 correct.style.color = "red";
-                timer -= 10000; // Subtracting 10 seconds from timer
+                timeRemaining -= 10; // Subtracting 10 seconds from timer
                 clearTimeout(resultTimer);
                 endQuiz();
             }
@@ -147,7 +181,7 @@ function fourthQuestion() {
             } else {
                 correct.textContent = "Incorrect :(";
                 correct.style.color = "red";
-                timer -= 10000; // Subtracting 10 seconds from timer
+                timeRemaining -= 10; // Subtracting 10 seconds from timer
                 clearTimeout(resultTimer);
                 fifthQuestion();
             }
@@ -194,7 +228,7 @@ function thirdQuestion() {
             } else {
                 correct.textContent = "Incorrect :(";
                 correct.style.color = "red";
-                timer -= 10000; // Subtracting 10 seconds from timer
+                timeRemaining -= 10; // Subtracting 10 seconds from timer
                 clearTimeout(resultTimer);
                 fourthQuestion();
             }
@@ -241,7 +275,7 @@ function secondQuestion() {
             } else {
                 correct.textContent = "Incorrect :(";
                 correct.style.color = "red";
-                timer -= 10000; // Subtracting 10 seconds from timer
+                timeRemaining -= 10; // Subtracting 10 seconds from timer
                 clearTimeout(resultTimer);
                 thirdQuestion();
             }
@@ -272,20 +306,31 @@ function firstQuestion() {
             } else {
                 correct.textContent = "Incorrect :(";
                 correct.style.color = "red";
-                timer -= 10000; // Subtracting 10 seconds from timer
+                timeRemaining -= 10; // Subtracting 10 seconds from timer
                 secondQuestion(); 
             }
         });
     }
 }
 
+function startTimer() {
+    // Setting the timer on screen to the delay in seconds
+    timerDisplay.textContent = timeRemaining;
+    timeRemaining--;
+
+    // Ending the quiz when time reaches 0
+
+}
+
 // Hiding "START!" button and revealing quiz choices when user presses "START!" button
 function startQuiz() {
     // Reveal quiz choices 
+    //localStorage.clear();
     for (var i = 0; i < choicesNumber; i++) {
         quizChoices[i].style.display = "block";
     }
     startButton.style.display = "none";  // Hide start button
+    quizTimer = setInterval(startTimer, delay); // Start the timer
     firstQuestion(); // Proceeding to first question
 }
 

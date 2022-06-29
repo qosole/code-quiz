@@ -20,6 +20,13 @@ header {
         font-size: 32px;
     }
 
+    header h2 {
+        position: absolute;
+        top: 5%;
+        left: 50%;
+        font-size: 32px;
+    }
+
 
 /* First column of buttons (quiz choices) */
 #quiz-choices-c1{
@@ -65,6 +72,15 @@ header {
 form {
     text-align: center;
     margin-top: 10px;
+}
+
+
+/* High scores display */
+.high-score-display {
+    list-style: none;
+}
+.display {
+    text-align: center;
 }
 
 
